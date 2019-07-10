@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue dome</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<style>
+    .inner{width:1550px;
+    height: 600px;
+    background: #1a7179;
+    }
+    .linkclick{padding: 40px;}
+</style>
+
+
+<div id="app">
+    <!--<div class="inner" @click="divHandler">-->
+    <!--<input type="button" value="点击" @click.stop="bthHandler">-->
+    <!--</div>-->
+
+    <!--<a href="htpp://baidu.com" @click.prevent="linkclick">点击</a>-->
+    <!--<div class="inner" @click.capture="divHandler">-->
+        <!--<input type="button" value="点击" @click="bthHandler">-->
+    <!--</div>-->
+    <div class="inner" @click="linkclick">
+    <div class="inner" @click="divHandler">
+        <input type="button" value="点击" @click.stop="bthHandler">
+    </div>
+</div>
+    </div>
+
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data:{
+
+        },
+        methods:{
+            divHandler() {
+            console.log('1')
+            },
+            bthHandler() {
+            console.log('2')
+            },
+            linkclick(){
+                console.log('3')
+            }
+
+            }
+
+
+
+    })
+</script>
+</body>
+</html>

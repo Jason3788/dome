@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue dome</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+
+<div id="app">
+    
+    <div class="panel panel-primary">
+          <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+          </div>
+          <div class="panel-body form-inline">
+                <label>
+                    id:
+                    <input type="text" class="form-control" v-model="id">
+                </label>
+                <label>
+                    Name:
+                    <input type="text" class="form-control" v-model="name" @keyup.f2="add">
+                </label>
+                 <input type="button" value="添加" class="btn btn-primary" @click="add()">
+<label>
+    搜索关键字:
+    <input type="text" class="form-control"  v-model="keywords" v-focus>
+</label>
+
+          </div>
+    </div>
+    
+      
+      <table class="table table-bordered table-hover table-striped">
+          <thead>
+              <tr>
+                <th>Id</th>
+                <th>品牌名称</th>
+                <th>添加时间</th>
+                <th>操作</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr v-for='icr in search(keywords)' :key="icr.id">
+                  <td>{{ icr.id }}</td>
+                <td v-text="icr.name"></td>
+                <td>{{ icr.someTime | cTime }}</td>
+                <td> <a href='#' target='_blank' @click.prevent="del(icr.id)">删除</a>
+                 </td>
+              </tr>
+          </tbody>
+      </table>
+      
+
+
+</div>
+
+
+<script>
+Vue.filter('cTime',function(dateStr ,pattern=""){
+var dt = new Date(dateStr)
+var y = dt.getFullYear()
+var m = (dt.getMonth() + 1).toString().padStart(2,0)
+var d = dt.getDate()
+
+
+if(pattern.toLowerCase() === 'yyyy-mm-dd'){//toLowerCase()转换大小写
+ 
+return `${y}-${m}-${d}`
+}else{
+var hh = dt.getHours()
+var mm = (dt.getMinutes()).toString().padStart(2,0)
+var ss = (dt.getSeconds()).toString().padStart(2,0)
+return `${y}-${m}-${d} ${hh}:${mm}:${ss} `
+}
+})
+
+//自定义全局按键修饰符
+Vue.config.keyCodes.f2 =113
+
+Vue.directive('focus',{
+    inserted: function(el){
+        el.focus()
+    }
+
+
+});
+
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            id:'',
+            name:'',
+            keywords:'',
+           list :[
+               { id: 1, name: '奔驰', someTime: new Date()},
+               { id: 2, name: '宝马', someTime: new Date() }
+           ]
+        },
+        methods: {
+        add(){
+            var some = {id: this.id, name: this.name, someTime:new Date()}
+            this.list.push(some)
+            this.id = this.name = ''
+        },
+        del(id){
+       var index = this.list.findIndex(icr => {
+         if (icr.id = id) {
+             return true;
+         }
+        })
+        this.list.splice(index,1)
+        },
+         search(keywords){
+             return this.list.filter(icr => {
+             if (icr.name.includes(keywords)) {
+             return icr
+          }
+          })
+
+          // return newList
+          }
+          }
+          });
+
+
+
+
+</script>
+</body>
+
+</html>

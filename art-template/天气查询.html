@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="template-web.js"></script>
+    <script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.12.1/jquery.min.js"></script>
+</head>
+<script type="text/html" id="water">
+    {{if weather}}
+    {{each weather as value}}
+        <div>
+            <span>日期：{{value.date}}</span>
+            <ul><li>白天天气{{value.info.day[1]}}</li>
+                <li>白天温度{{value.info.day[2]}}</li>
+                <li>白天风向{{value.info.day[3]}}</li>
+                <li>白天风速{{value.info.day[4]}}</li>
+            </ul>
+            <ul>
+                <li>夜间天气{{value.info.night[1]}}</li>
+                <li>夜间温度{{value.info.night[2]}}</li>
+                <li>夜间风向{{value.info.night[3]}}</li>
+                <li>夜间风速{{value.info.night[4]}}</li>
+            </ul>
+        </div>
+    {{/each}}
+{{/if}}
+</script>
+<script>
+    $(function () {
+        $('#btn').click(function () {
+            var code = $('#city').val();
+            $.ajax({
+				url: 'http://tq.360.cn/api/weatherquery/querys',
+				data:{app:'tq360',code:code},
+                jsonp: '_jsonp',
+                jsonpCallback: 'renderData',
+                dataType: 'jsonp',
+                success: function (data) {
+                    var html = template('water', data);
+                    $('#info').html(html);
+                }
+            })
+        })
+
+    })
+
+    //http://tq.360.cn/api/weatherquery/querys?_jsonp=renderData&app=tq360&code=101020100&_=1548219615211
+    //http://tq.360.cn/api/weatherquery/querys?app=tq360&code=101030100&t=1548218521559&c=1548319551659&_jsonp=renderData&_=1548218521559
+
+
+</script>
+
+
+<body>
+
+    <div id="cont">
+        <select name="" id="city">
+            <option value="101010100">北京</option>
+            <option value="101020100">上海</option>
+            <option value="101280101">广州</option>
+            <option value="101280601">深圳</option>
+        </select>
+        <input type="button" id="btn" value="查询">
+        <div id="info"></div>
+
+
+    </div>
+
+
+</body>
+
+</html>

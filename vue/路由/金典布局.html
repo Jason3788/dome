@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="./lib/vue-2.4.0.js"></script>
+    <!-- 1. 安装 vue-router 路由模块 -->
+    <script src="./lib/vue-router-3.0.1.js"></script>
+  
+</head>
+
+<body>
+
+    <div id="app">
+       
+   <router-view></router-view>
+    <router-view name="left"></router-view>
+     <router-view name="main"></router-view>
+
+<!-- 监听文本框数据改变 -->
+<!-- <input type="text" v-model="firstname" @keyup="getFullname">+
+<input type="text" v-model="lastname" @keyup="getFullname">=
+<input type="text" v-model="fullname"> -->
+<input type="text" v-model="firstname">+
+<input type="text" v-model="lastname">=
+<input type="text" v-model="fullname">
+    </div>
+
+
+    <script>
+    
+     var header = {
+         template:"<h1>头部区域</h1>"
+     }
+     var leftBox = {
+     template:"<h1>left区域</h1>"
+     }
+     var mainBox = {
+     template:"<h1>right区域</h1>"
+     }
+
+     var router = new VueRouter({
+         routes:[
+             {path:'/' , components: {
+                 'default': header,
+                 'left': leftBox,
+                 'main': mainBox
+             }},
+         ]
+     })
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                firstname:'',
+                lastname:'',
+               
+            },
+            methods: {
+                // getFullname(){
+                //     this.fullname = this.firstname + '-' + this.lastname
+                // }
+            },
+            watch: { //监测data 数据变化
+            // 'firstname':function (newVal ,oldVal) { 
+            //     this.fullname = newVal + '-' + this.lastname
+            //  },
+            // 'lastname':function (newVal) {
+            // this.fullname = this.firstname + '-' + newVal
+            // },
+
+            },
+            computed:{ //定义属性
+            'fullname':function(){
+                return this.firstname + '-' + this.lastname
+            }
+
+            },
+            router
+
+
+
+        })
+    </script>
+
+
+
+</body>
+
+</html>

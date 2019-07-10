@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="ajax.js"></script>
+    <script>
+    window.onload = function(){
+     var btn1 = document.getElementById('btn1');
+     var btn2 = document.getElementById('btn2');
+     btn1.onclick = function(){
+       ajax('get','02.php',function(data){
+          var div1 = document.getElementById('info1');
+          div1.innerHTML = data;
+       });
+     }
+    }
+    </script>
+</head>
+<body>
+    <input type="button" value="点击1" id='btn1'>
+    <div id="info1"></div>
+    <input type="button" value="点击2" id="btn2">
+</body>
+</html>

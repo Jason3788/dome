@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.staticfile.org/jquery/1.12.1/jquery.min.js"></script>
+     <script>
+     $(function(){
+    $('#sub').keyup(function(){
+        var kw = $(this).val();
+     $.ajax({
+        url:'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+                jsonp:'cb',
+                data:{wd:kw},
+                dataType:'jsonp',
+         success:function(data){
+           var sug = data.s;
+           var tag = '<ul>'
+            $.each(sug,function(i,e){
+                tag += '<li>'+e+'</li>'
+            });
+            tag += '</ul>'
+            $('.info').html(tag);
+        // console.log(data)
+         }
+
+
+     });
+
+
+    })
+
+
+
+     })
+
+
+     
+     </script>
+
+
+</head>
+<body>
+    <div class="content">
+   <input type="text" name="sub" id="sub">
+   <input type="button" value="点击" id='btn'>
+<div class="info"></div>
+
+    </div>
+
+
+
+</body>
+</html>

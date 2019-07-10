@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+ 
+window.onload = function () {
+  var btn = document.getElementById('btn');
+  btn.onclick = function () {
+    var uname = document.getElementById('username').value;
+    var pw = document.getElementById('password').value;
+    var xhr = new XMLHttpRequest();//创建XMLHttpRequest对象  正常浏览器
+    // var xhr = new  ActiveXObject('Microsoft.XMLHTTP');//老版本ie6
+    //参数1.请求方式（get获取数据，post提交数据）
+    //参数2.请求地址
+    //参数3.true表示异步，false表示同步
+    //xhr.open('get', '02.php?username=' + uname + '$password=' + pw, true);//准备发送
+   var param = 'username=' + uname + '&password=' + pw;
+    xhr.open('get', '02.php?'+encodeURI(param), true);//准备发送  encodeURI转码
+    xhr.send(null);//执行发送动作  get请求这里需要添加null
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {//表示数据获取成功
+        if (xhr.status == 200) {
+          alert(xhr.responseText);
+        }
+      }
+    }
+  }
+}
+
+    </script>
+</head>
+<body>
+        <form>
+                用户名：
+                <input type="text" name="username" id="username"><span id="info"></span>
+                <br>密码：
+                <input type="text" name="password" id="password">
+                <input type="button" value="登入" id="btn">
+              </form>
+</body>
+</html>
